@@ -1,0 +1,39 @@
+@import "colors.less";
+
+@headerHeight: 120px;
+
+.layoutTitle {
+    position: absolute;
+    top: 21px;
+    left: 0;
+    right: 0;
+    font-size: 55px;
+    text-align: center;
+    color: @lightBlue;
+}
+
+.layoutMainContainer {
+    position: absolute;
+    top: @headerHeight;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
+
+.layoutBackButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    padding: 20px;
+    font-size: 55px;
+
+    // border-right: 2px solid;
+    // border-bottom: 2px solid;
+    // border-bottom-right-radius: 12px;
+
+    i {
+        line-height:48px;
+    }
+}

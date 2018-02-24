@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>Orbs</title>
+
+    <link rel="stylesheet" type="text/css" href="<%= cachebustedRelativeDir %>/lib/reset.css" />
+    <link rel="stylesheet" type="text/css" href="<%= cachebustedRelativeDir %>/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="<%= cachebustedRelativeDir %>/sudoku.min.css" />
+
+    <%
+        for (var i = 0; i < libFilesRelativePaths.length; i++) {
+            var file = libFilesRelativePaths[i];
+            print('<script type="text/javascript" src="' + getVersionedPath(file) + '"></script>');
+        }
+    %>
+</head>
+
+<body>
+    <h1>Sudoku Solver</h1>
+    <div class="sudokuApp" ng-controller="RootController as rootController">
+
+    </div>
+
+    <script type="text/javascript" src="<%= cachebustedRelativeDir %>/sudoku.js"></script>
+</body>
+
+</html>
