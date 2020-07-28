@@ -1,0 +1,41 @@
+<div class="puzzleBoard">
+    <div *ngFor="let row of board.rows"
+         class="puzzleBoard_row"
+    >
+        <div *ngFor="let cell of row; "
+             class="puzzleBoard_cell"
+             [ngClass]="{
+                error: cell.isError,
+                guessMode: cell.isGuessMode,
+                selected: cell.isSelected,
+                starterVal: cell.isStarterVal
+             }"
+             (mousedown)="onCellClick($event, cell)"
+        >
+            <div *ngIf="!cell.isGuessMode"
+                 class="puzzleBoard_cellNum">
+                {{cell.num}}
+            </div>
+            <div *ngIf="cell.isGuessMode || !cell.num"
+                 class="puzzleBoard_cellGuesses">
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[1]" [puzzleCellColor]="cell.guesses[1]?.color">1</span>
+                    </div>
+                    <div class="puzzleBoard_cellGuess">2</div>
+                    <div class="puzzleBoard_cellGuess">3</div>
+                </div>
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">4</div>
+                    <div class="puzzleBoard_cellGuess">5</div>
+                    <div class="puzzleBoard_cellGuess">6</div>
+                </div>
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">7</div>
+                    <div class="puzzleBoard_cellGuess">8</div>
+                    <div class="puzzleBoard_cellGuess">9</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

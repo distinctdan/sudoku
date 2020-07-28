@@ -1,0 +1,15 @@
+<div class="page_container">
+    <h1 class="page_title">
+        Select a sudoku puzzle:
+    </h1>
+    <div class="puzzles_listWrapper">
+        <div class="puzzles_list">
+            <a *ngFor="let puzzle of puzzles; trackBy: trackByPuzzles"
+               class="puzzles_listItem"
+               [routerLink]="['/puzzles', puzzle.id]"
+            >
+                {{puzzle.name}}
+            </a>
+        </div>
+    </div>
+</div>

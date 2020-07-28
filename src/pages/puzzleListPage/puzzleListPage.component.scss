@@ -1,0 +1,26 @@
+.puzzles_listWrapper {
+    text-align: center;
+}
+
+.puzzles_list {
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.puzzles_listItem {
+    display: block;
+    width: 200px;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #137eca;
+    color: #EEE;
+    text-decoration: none;
+
+    &:hover, &:focus {
+        background: #3396dc;
+        color: #FFF;
+    }
+}

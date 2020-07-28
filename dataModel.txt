@@ -1,6 +1,6 @@
 Sudoku
 -----------------------
-board: Cell[][];
+rows: Cell[][];
 mode: win | selectCell | showAllNum;
 hoveredCell: {row, col};
 selectedCell: {row, col};
@@ -8,7 +8,7 @@ showingAllNum: number;
 Cell: {
 	num: number;
 	isError;
-	isHovered;
+	isEditable;
 	guesses: Array<{
 		num: number;
 		color: red | green | blue | yellow;

@@ -1,0 +1,90 @@
+$cellSize: 40px;
+$border: 1px solid #333;
+$borderRadius: 4px;
+
+.puzzleBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.puzzleBoard_row {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+
+    &:first-child {
+        .puzzleBoard_cell:first-child {
+            border-top-left-radius: $borderRadius;
+        }
+        .puzzleBoard_cell:last-child {
+            border-top-right-radius: $borderRadius;
+        }
+    }
+
+    &:last-child {
+        border-bottom: $border;
+        border-bottom-left-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
+
+        .puzzleBoard_cell:first-child {
+            border-bottom-left-radius: $borderRadius;
+        }
+        .puzzleBoard_cell:last-child {
+            border-bottom-right-radius: $borderRadius;
+        }
+    }
+}
+
+.puzzleBoard_cell {
+    flex: 0 0 auto;
+    width: $cellSize;
+    height: $cellSize;
+    // Using flex to center content
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-size: 30px;
+    cursor: pointer;
+    border-left: $border;
+    border-top: $border;
+
+    &:last-child {
+        border-right: $border;
+    }
+
+    &.starterVal {
+        font-weight: bold;
+    }
+
+    &.guessMode {
+        align-items: stretch;
+        justify-content: stretch;
+    }
+}
+
+.puzzleBoard_cellNum {
+    flex: 0 0 auto;
+}
+
+.puzzleBoard_cellGuesses {
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.puzzleBoard_cellGuessRow {
+    flex: 1 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.puzzleBoard_cellGuess {
+    flex: 1 0 0;
+    font-size: 11px;
+    text-align: center;
+}
+
+.puzzleColor_blue { color: #3396dc }

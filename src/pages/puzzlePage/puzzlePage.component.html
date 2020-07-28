@@ -1,0 +1,22 @@
+<div class="page_container">
+    <h1 class="page_title">
+        {{title}}
+    </h1>
+    <a class="puzzlePage_backButton"
+       [routerLink]="'/'">
+        &lsaquo;
+    </a>
+    <div *ngIf="loadingState === LoadState.Loading"
+         class="puzzlePage_loader"
+    >
+        Loading...
+    </div>
+    <div *ngIf="loadingState === LoadState.Success">
+        <div class="puzzlePage_boardContainer">
+            <puzzle-board [board]="puzzle"></puzzle-board>
+        </div>
+        <div class="puzzlePage_controls">
+            <puzzle-controls></puzzle-controls>
+        </div>
+    </div>
+</div>
