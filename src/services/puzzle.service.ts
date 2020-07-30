@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {PuzzleColor} from 'src/enums/PuzzleColor';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { PuzzleColor } from 'src/enums/PuzzleColor';
+import { IPuzzle } from 'src/store/puzzle/types';
 
 interface IPuzzleResponse {
     response: boolean;
@@ -26,10 +28,6 @@ export interface IPuzzleCell {
     }>;
 }
 
-export interface IPuzzle {
-    rows: IPuzzleCell[][];
-}
-
 export interface IPuzzleListItem {
     name: string,
     id: string,
@@ -46,7 +44,9 @@ export class PuzzleService {
         '3': {"response":true,"size":"9","squares":[{"x":0,"y":0,"value":8},{"x":0,"y":4,"value":6},{"x":1,"y":6,"value":2},{"x":2,"y":3,"value":1},{"x":2,"y":5,"value":4},{"x":2,"y":7,"value":6},{"x":3,"y":4,"value":4},{"x":3,"y":8,"value":2},{"x":5,"y":1,"value":9},{"x":5,"y":7,"value":1},{"x":5,"y":8,"value":6},{"x":6,"y":2,"value":8},{"x":6,"y":8,"value":9},{"x":7,"y":0,"value":4},{"x":7,"y":5,"value":1},{"x":7,"y":6,"value":6},{"x":7,"y":8,"value":7},{"x":8,"y":1,"value":6},{"x":8,"y":3,"value":4},{"x":8,"y":4,"value":9},{"x":8,"y":7,"value":2}]},
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+    ) {}
 
     public getPuzzlesList(): IPuzzleListItem[] {
         const ids = Object.keys(this.puzzleResponses);
@@ -112,7 +112,12 @@ export class PuzzleService {
                     cell.isGuessMode = false;
                 }
 
-                return { rows };
+                return {
+                    id: puzzleId,
+                    rows,
+                    selectedCell: undefined,
+                    showingAllNum: undefined,
+                };
             }));
     }
 }

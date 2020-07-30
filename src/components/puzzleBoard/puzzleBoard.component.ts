@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { IPuzzle, IPuzzleCell } from "src/services/puzzle.service";
+import { IPuzzle, IPuzzleCell } from "src/store/puzzle/types";
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'puzzle-board',
@@ -10,7 +12,7 @@ export class PuzzleBoardComponent {
 
     @Input() board: IPuzzle;
 
-    constructor() {
+    constructor(private store: Store) {
 
     }
 

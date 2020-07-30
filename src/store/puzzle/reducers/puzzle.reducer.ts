@@ -1,33 +1,9 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import * as PuzzleActions from '../actions/puzzle.actions';
-import { PuzzleColor } from "../../enums/PuzzleColor";
 import { cloneDeep } from 'lodash';
 
-export interface IPuzzleCell {
-    num: number | undefined;
-    isError?: boolean;
-    isGuessMode?: boolean;
-    isSelected?: boolean;
-    isStarterVal: boolean;
-    // 1-based array of 10 items. We're ignoring the 0th slot.
-    // So if the user guess "1", we'll set a guess object at index[1];
-    guesses: Array<{
-        color: PuzzleColor;
-    }>;
-}
-
-export interface IPuzzle {
-    hasWon?: boolean;
-    id: string,
-    rows: IPuzzleCell[][],
-    selectedCell: {row: number, col: number};
-    showingAllNum: number;
-}
-
-export interface IPuzzlesState {
-    puzzles: {[id: string]: IPuzzle};
-    activePuzzleId: string;
-}
+import * as PuzzleActions from 'src/store/puzzle/actions/puzzle.actions';
+import { PuzzleColor } from 'src/enums/PuzzleColor';
+import { IPuzzlesState, IPuzzle, IPuzzleCell} from 'src/store/puzzle/types';
+import * as PuzzleAPIActions from 'src/store/puzzle/actions/puzzleAPI.actions';
 
 export const initialState: IPuzzlesState = {
     puzzles: {},
@@ -100,18 +76,28 @@ function markPuzzleErrors(puzzle: IPuzzle): number {
     return errorCount;
 }
 
-export function puzzleReducer(
+export function reducer(
     state: IPuzzlesState = initialState,
-    action: PuzzleActions.PuzzleActionType
+    action: PuzzleActions.Actions | PuzzleAPIActions.Actions
 ): IPuzzlesState {
-    if (!state.activePuzzleId) return state;
-
-    // Make sure we have a puzzle loaded
-    const puzzle = state.puzzles[state.activePuzzleId]
-    if (!puzzle) return state;
-
     switch (action.type) {
-        case PuzzleActions.CLEAR_CELL: {
+        // ------------- API Actions -------------
+        case PuzzleAPIActions.loadPuzzleSuccess.type: {
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [action.puzzle.id]: action.puzzle,
+                }
+            }
+        }
+        // ------------- Puzzles Actions -------------
+        case PuzzleActions.clearCell.type: {
+            // Make sure we have a puzzle loaded
+            if (!state.activePuzzleId) return state;
+            const puzzle = state.puzzles[state.activePuzzleId]
+            if (!puzzle) return state;
+
             // Make sure it's editable before we clear it.
             if (puzzle.rows[action.row][action.col].isStarterVal) {
                 return state;
@@ -131,9 +117,34 @@ export function puzzleReducer(
                 }
             }
         }
+        case PuzzleActions.selectCell.type: {
+            // Make sure we have a puzzle loaded
+            if (!state.activePuzzleId) return state;
+            const puzzle = state.puzzles[state.activePuzzleId]
+            if (!puzzle) return state;
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: {
+                        ...puzzle,
+                        selectedCell: {
+                            row: action.row,
+                            col: action.col,
+                        }
+                    },
+                }
+            }
+        }
+        case PuzzleActions.setActivePuzzle.type:
+            return {
+                ...state,
+                activePuzzleId: action.puzzleId,
+            }
         default:
             return state;
     }
 }
 
-export const puzzlesFeatureKey = 'puzzles';
+export const featureKey = 'puzzlesFeature';
