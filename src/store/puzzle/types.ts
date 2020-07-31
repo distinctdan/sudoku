@@ -17,6 +17,7 @@ export interface IPuzzleCell {
 }
 
 export interface IPuzzle {
+    guessColor: PuzzleColor;
     hasWon?: boolean;
     id: string,
     rows: IPuzzleCell[][],

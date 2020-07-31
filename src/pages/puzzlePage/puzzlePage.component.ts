@@ -9,7 +9,7 @@ import { PuzzleService } from 'src/services/puzzle.service';
 import { IPuzzle } from 'src/store/puzzle/types';
 import * as PuzzleActions from 'src/store/puzzle/actions/puzzle.actions';
 import * as PuzzleAPIActions from 'src/store/puzzle/actions/puzzleAPI.actions';
-import * as PuzzleSelectors from 'src/store/puzzle/selectors/puzzle.selector';
+import * as PuzzleSelectors from 'src/store/puzzle/selectors/puzzle.selectors';
 
 @Component({
     selector: 'puzzle-page',

@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import { PuzzleActions, PuzzleAPIActions, } from 'src/store/puzzle/actions';
 import { IPuzzlesState, IPuzzle, IPuzzleCell } from 'src/store/puzzle/types';
 import { PuzzleColor } from 'src/enums';
+import { selectCanToggleGuessMode } from 'src/store/puzzle/selectors/puzzle.selectors';
 
 export const initialState: IPuzzlesState = {
     puzzles: {},
@@ -116,11 +117,34 @@ export function reducer(
                 }
             }
         }
-        case PuzzleActions.selectCell.type: {
+        case PuzzleActions.deselectCells.type: {
             // Make sure we have a puzzle loaded
             if (!state.activePuzzleId) return state;
             const puzzle = state.puzzles[state.activePuzzleId]
             if (!puzzle) return state;
+
+            // If the puzzle doesn't have a cell selected, return the same state to avoid rerendering
+            if (!puzzle.selectedCell) return state;
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: {
+                        ...puzzle,
+                        selectedCell: undefined,
+                    }
+                }
+            }
+        }
+        case PuzzleActions.selectCell.type: {
+            if (!state.activePuzzleId) return state;
+            const puzzle = state.puzzles[state.activePuzzleId]
+            if (!puzzle) return state;
+
+            // Make sure we stay within our bounds
+            const row = Math.max(0, Math.min(8, action.row));
+            const col = Math.max(0, Math.min(8, action.col));
 
             return {
                 ...state,
@@ -129,8 +153,8 @@ export function reducer(
                     [state.activePuzzleId]: {
                         ...puzzle,
                         selectedCell: {
-                            row: action.row,
-                            col: action.col,
+                            row,
+                            col,
                         }
                     },
                 }
@@ -141,6 +165,56 @@ export function reducer(
                 ...state,
                 activePuzzleId: action.puzzleId,
             }
+        case PuzzleActions.toggleGuessMode.type:
+            if (!selectCanToggleGuessMode(state)) return state;
+
+            const activePuzzle = state.puzzles[state.activePuzzleId];
+            if (!activePuzzle || !activePuzzle.selectedCell) return state;
+
+            const puzzle = cloneDeep(activePuzzle);
+            const { row, col } = puzzle.selectedCell;
+            const cell = puzzle.rows[row][col];
+
+            if (!cell.isGuessMode) {
+                cell.isGuessMode = true;
+
+                // If the cell has a number, convert it to a guess
+                if (cell.num) {
+                    cell.guesses[cell.num] = {color: puzzle.guessColor};
+                    cell.num = undefined;
+                }
+            } else {
+                // Cell is already in guess mode.
+                // We can only turn off guess mode if the cell has 1 or 0 numbers in it
+                const numGuesses = cell.guesses.reduce((acc, cur) => {
+                    return acc + (cur ? 1 : 0);
+                }, 0);
+
+                if (numGuesses === 0) {
+                    cell.isGuessMode = false;
+                } else if (numGuesses === 1) {
+                    // Find the guess and convert it to a num.
+                    cell.isGuessMode = false;
+                    let num = 1;
+                    // Guesses are 1-indexed, it's the first guess that isn't undefined
+                    for (; num < cell.guesses.length; num++) {
+                        if (cell.guesses[num]) {
+                            break;
+                        }
+                    }
+                    cell.num = num;
+                    cell.guesses = [];
+                }
+                // Else, the cell has more than 1 guess, so we can't do anything.
+            }
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: puzzle,
+                }
+            };
         default:
             return state;
     }

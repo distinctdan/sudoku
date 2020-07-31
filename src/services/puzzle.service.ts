@@ -82,7 +82,7 @@ export class PuzzleService {
                             isStarterVal: false,
                             // TEMP!!!
                             isGuessMode: true,
-                            guesses: new Array(10),
+                            guesses: [],
                             row: i,
                             col: j,
                         };
@@ -101,6 +101,7 @@ export class PuzzleService {
                 }
 
                 return {
+                    guessColor: PuzzleColor.Blue,
                     id: puzzleId,
                     rows,
                     selectedCell: undefined,
