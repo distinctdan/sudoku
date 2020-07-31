@@ -1,9 +1,8 @@
 import { cloneDeep } from 'lodash';
 
-import * as PuzzleActions from 'src/store/puzzle/actions/puzzle.actions';
-import { PuzzleColor } from 'src/enums/PuzzleColor';
-import { IPuzzlesState, IPuzzle, IPuzzleCell} from 'src/store/puzzle/types';
-import * as PuzzleAPIActions from 'src/store/puzzle/actions/puzzleAPI.actions';
+import { PuzzleActions, PuzzleAPIActions, } from 'src/store/puzzle/actions';
+import { IPuzzlesState, IPuzzle, IPuzzleCell } from 'src/store/puzzle/types';
+import { PuzzleColor } from 'src/enums';
 
 export const initialState: IPuzzlesState = {
     puzzles: {},

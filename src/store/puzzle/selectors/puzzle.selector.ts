@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from 'src/store';
-import { IPuzzlesState } from 'src/store/puzzle/types';
+import { IPuzzlesState, IPuzzle } from 'src/store/puzzle/types';
 import * as fromPuzzle from 'src/store/puzzle/reducers/puzzle.reducer';
 
 export const selectFeature = (state: AppState): IPuzzlesState => {

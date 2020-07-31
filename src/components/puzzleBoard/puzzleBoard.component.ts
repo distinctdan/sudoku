@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { IPuzzle, IPuzzleCell } from "src/store/puzzle/types";
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { IPuzzle, IPuzzleCell } from 'src/store/puzzle';
+import { PuzzleActions } from 'src/store/puzzle';
 
 @Component({
     selector: 'puzzle-board',
@@ -9,7 +10,6 @@ import { Observable } from 'rxjs';
     styleUrls: ['./puzzleBoard.component.scss']
 })
 export class PuzzleBoardComponent {
-
     @Input() board: IPuzzle;
 
     constructor(private store: Store) {
@@ -17,7 +17,25 @@ export class PuzzleBoardComponent {
     }
 
     public onCellClick($e, cell: IPuzzleCell) {
-        console.log('cell clicked: ', cell);
         $e.preventDefault();
+        this.store.dispatch(PuzzleActions.selectCell({
+            row: cell.row,
+            col: cell.col
+        }));
+    }
+
+    public isCellSelected(cell: IPuzzleCell): boolean {
+        const selectedCell = this.board && this.board.selectedCell;
+        return selectedCell
+            && cell.row === selectedCell.row
+            && cell.col === selectedCell.col;
+    }
+
+    public isCellRowColSelected(cell: IPuzzleCell): boolean {
+        const selectedCell = this.board && this.board.selectedCell;
+        return selectedCell && (
+            cell.row === selectedCell.row
+            || cell.col === selectedCell.col
+        )
     }
 }

@@ -64,6 +64,9 @@ $borderRadius: 4px;
         align-items: stretch;
         justify-content: stretch;
     }
+
+    &.rowColSelected { background: #dfe8f1; }
+    &.selected { background: #94bfe4; }
 }
 
 .puzzleBoard_cellNum {

@@ -7,7 +7,8 @@
              [ngClass]="{
                 error: cell.isError,
                 guessMode: cell.isGuessMode,
-                selected: cell.isSelected,
+                rowColSelected: isCellRowColSelected(cell),
+                selected: isCellSelected(cell),
                 starterVal: cell.isStarterVal
              }"
              (mousedown)="onCellClick($event, cell)"

@@ -11,6 +11,9 @@ export interface IPuzzleCell {
     guesses: Array<{
         color: PuzzleColor;
     }>;
+    // Caching row and column because they never change and it saves us having to look them up.
+    row: number;
+    col: number;
 }
 
 export interface IPuzzle {

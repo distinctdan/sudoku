@@ -3,29 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PuzzleColor } from 'src/enums/PuzzleColor';
-import { IPuzzle } from 'src/store/puzzle/types';
+import { PuzzleColor } from 'src/enums';
+import { IPuzzle, IPuzzleCell } from 'src/store/puzzle';
 
 interface IPuzzleResponse {
     response: boolean;
     size: string;
     squares: {x: number, y: number, value: number}[];
-}
-
-// The PuzzleService doesn't care about guesses or errors, but it's cleaner to use the same
-// puzzle format across the app, rather than adding another layer of mapping between
-// this service and the puzzle component.
-export interface IPuzzleCell {
-    num: number | undefined;
-    isError?: boolean;
-    isGuessMode?: boolean;
-    isSelected?: boolean;
-    isStarterVal: boolean;
-    // 1-based array of 10 items. We're ignoring the 0th slot.
-    // So if the user guess "1", we'll set a guess object at index[1];
-    guesses: Array<{
-        color: PuzzleColor;
-    }>;
 }
 
 export interface IPuzzleListItem {
@@ -85,6 +69,8 @@ export class PuzzleService {
             }))
             .pipe(map((response) => {
                 // Map the API's response to our puzzle format.
+                // The PuzzleService doesn't care about guesses or errors,
+                // but it's cleaner to use the same puzzle format across the app.
                 const rows: IPuzzleCell[][] = [];
 
                 for (let i = 0; i < size; i++) {
@@ -97,6 +83,8 @@ export class PuzzleService {
                             // TEMP!!!
                             isGuessMode: true,
                             guesses: new Array(10),
+                            row: i,
+                            col: j,
                         };
                         cols[j].guesses[1] = {color: PuzzleColor.Blue};
                     }
