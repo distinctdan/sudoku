@@ -1,10 +1,9 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from 'src/store';
-import { IPuzzlesState, IPuzzle } from 'src/store/puzzle/types';
-import * as fromPuzzle from 'src/store/puzzle/reducers/puzzle.reducer';
+import { puzzlesFeatureKey, IPuzzlesState, IPuzzle } from 'src/store/puzzle/types';
 
 export const selectFeature = (state: AppState): IPuzzlesState => {
-    return state[fromPuzzle.featureKey];
+    return state[puzzlesFeatureKey];
 }
 
 export const selectActivePuzzle = createSelector(
@@ -14,23 +13,19 @@ export const selectActivePuzzle = createSelector(
 
 // This is if it's possible to toggle guess mode for the selected cell.
 // It's only possible if we have a cell selected, and it has 0 or 1 numbers in it.
-export const selectCanToggleGuessMode = createSelector(
-    selectActivePuzzle,
-    (puzzle: IPuzzle) => {
-        if (!puzzle || !puzzle.selectedCell) return false;
+export const canToggleGuessMode = (puzzle: IPuzzle) => {
+    if (!puzzle || !puzzle.selectedCell) return false;
 
-        // Look up the cell and check it.
-        const { row, col } = puzzle.selectedCell;
-        const cell = puzzle.rows[row][col];
+    // Look up the cell and check it.
+    const { row, col } = puzzle.selectedCell;
+    const cell = puzzle.rows[row][col];
 
-        // By definition, if the cell isn't in guess mode, then it has 1 or 0 numbers.
-        if (!cell.isGuessMode) return true;
+    if (cell.isStarterVal) return false;
 
-        // The cell is in guess mode, see how many numbers it has.
-        const numGuesses = cell.guesses.reduce((acc, cur) => {
-            return acc + (cur ? 1 : 0);
-        }, 0);
+    // By definition, if the cell isn't in guess mode, then it has 1 or 0 numbers.
+    if (!cell.isGuessMode) return true;
 
-        return numGuesses <= 1;
-    }
-)
+    // The cell is in guess mode, see how many numbers it has.
+    const numGuesses = Object.keys(cell.guesses).length;
+    return numGuesses <= 1;
+}

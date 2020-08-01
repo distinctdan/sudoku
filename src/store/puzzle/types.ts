@@ -1,16 +1,25 @@
 import { PuzzleColor } from 'src/enums/PuzzleColor';
 
+export const puzzlesFeatureKey = 'puzzlesFeature';
+
 export interface IPuzzleCell {
     num: number | undefined;
     isError?: boolean;
     isGuessMode?: boolean;
     isSelected?: boolean;
     isStarterVal: boolean;
-    // 1-based array of 10 items. We're ignoring the 0th slot.
-    // So if the user guess "1", we'll set a guess object at index[1];
-    guesses: Array<{
-        color: PuzzleColor;
-    }>;
+    guesses: {
+        // Using explicit numbers here to get correct typing.
+        1?: { color: PuzzleColor };
+        2?: { color: PuzzleColor };
+        3?: { color: PuzzleColor };
+        4?: { color: PuzzleColor };
+        5?: { color: PuzzleColor };
+        6?: { color: PuzzleColor };
+        7?: { color: PuzzleColor };
+        8?: { color: PuzzleColor };
+        9?: { color: PuzzleColor };
+    };
     // Caching row and column because they never change and it saves us having to look them up.
     row: number;
     col: number;

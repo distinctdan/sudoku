@@ -1,5 +1,7 @@
 $cellSize: 40px;
-$border: 1px solid #333;
+$borderOuterColor: #000;
+$borderInnerColor: #BBB;
+$border: 1px solid $borderInnerColor;
 $borderRadius: 4px;
 
 .puzzleBoard_wrapper {
@@ -20,6 +22,14 @@ $borderRadius: 4px;
     display: flex;
     flex-direction: row;
 
+    // Darker borders for outer border and cell groups
+    &:nth-child(1), &:nth-child(4), &:nth-child(7) {
+        .puzzleBoard_cell {
+            border-top-color: $borderOuterColor;
+        }
+    }
+
+    // Rounded corners
     &:first-child {
         .puzzleBoard_cell:first-child {
             border-top-left-radius: $borderRadius;
@@ -28,9 +38,9 @@ $borderRadius: 4px;
             border-top-right-radius: $borderRadius;
         }
     }
-
     &:last-child {
         border-bottom: $border;
+        border-bottom-color: $borderOuterColor;
         border-bottom-left-radius: $borderRadius;
         border-bottom-right-radius: $borderRadius;
 
@@ -58,12 +68,20 @@ $borderRadius: 4px;
     cursor: pointer;
     border-left: $border;
     border-top: $border;
+    color: #2979b1;
+
+    // Vertical borders for cell groups
+    &:nth-child(1), &:nth-child(4), &:nth-child(7) {
+        border-left-color: $borderOuterColor;
+    }
 
     &:last-child {
         border-right: $border;
+        border-right-color: $borderOuterColor;
     }
 
     &.starterVal {
+        color: #000;
         font-weight: bold;
     }
 
@@ -98,4 +116,4 @@ $borderRadius: 4px;
     text-align: center;
 }
 
-.puzzleColor_blue { color: #3396dc }
+.puzzleColor_blue { color: #2979b1 }

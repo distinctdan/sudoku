@@ -80,13 +80,10 @@ export class PuzzleService {
                         cols[j] = {
                             num: undefined,
                             isStarterVal: false,
-                            // TEMP!!!
-                            isGuessMode: true,
-                            guesses: [],
+                            guesses: {},
                             row: i,
                             col: j,
                         };
-                        cols[j].guesses[1] = {color: PuzzleColor.Blue};
                     }
                     rows[i] = cols;
                 }
@@ -96,8 +93,6 @@ export class PuzzleService {
                     const cell = rows[square.y][square.x];
                     cell.num = square.value;
                     cell.isStarterVal = true;
-                    // TEMP!!!
-                    cell.isGuessMode = false;
                 }
 
                 return {

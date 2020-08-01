@@ -11,8 +11,8 @@ import { PuzzleCellColorDirective} from 'src/directives/puzzleCellColor.directiv
 import { PuzzleControlsComponent} from 'src/components/puzzleControls/puzzleControls.component';
 import { PuzzleListPageComponent } from 'src/pages/puzzleListPage/puzzleListPage.component';
 import { PuzzlePageComponent } from 'src/pages/puzzlePage/puzzlePage.component';
-import * as fromPuzzles from 'src/store/puzzle/reducers/puzzle.reducer';
-import { PuzzleEffects } from 'src/store/puzzle/effects/puzzle.effects';
+import { puzzlesFeatureKey, puzzlesReducer, PuzzleEffects } from 'src/store/puzzle';
+import { SaveStateService } from 'src/services/saveState.service';
 
 @NgModule({
     declarations: [
@@ -29,8 +29,8 @@ import { PuzzleEffects } from 'src/store/puzzle/effects/puzzle.effects';
         HttpClientModule,
         AppRoutingModule,
         StoreModule.forRoot({
-            [fromPuzzles.featureKey]: fromPuzzles.reducer
-        }),
+            [puzzlesFeatureKey]: puzzlesReducer
+        }, {initialState: undefined}),
         EffectsModule.forRoot([PuzzleEffects])
     ],
     providers: [],

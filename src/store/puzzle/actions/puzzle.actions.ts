@@ -17,8 +17,12 @@ export const setActivePuzzle = createAction(
     props<{puzzleId: string}>()
 );
 export const toggleGuessMode = createAction(
-    '[Puzzle] ToggleGuessMode',
+    '[Puzzle] Toggle Guess Mode',
     props<{row: number, col: number}>()
+);
+export const toggleNum = createAction(
+    '[Puzzle] Toggle Num',
+    props<{row: number, col: number, num: number}>()
 );
 
 // A union type is needed to get type safety in reducers.
@@ -28,5 +32,6 @@ const actions = union({
     selectCell,
     setActivePuzzle,
     toggleGuessMode,
+    toggleNum,
 })
 export type Actions = typeof actions;

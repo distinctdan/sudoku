@@ -46,7 +46,6 @@ export class PuzzleBoardComponent {
     public onKeyDown = ($e: KeyboardEvent) => {
         if ($e.defaultPrevented) return;
 
-        console.log('keyCode: ', $e.keyCode);
         let handled = true;
         // Using keyCode because key isn't supported by older browsers,
         // and key has different values on edge.
@@ -87,6 +86,29 @@ export class PuzzleBoardComponent {
 
         if (handled) {
             $e.preventDefault();
+        }
+    }
+
+    // This is separate from onKeyDown because we need the text value of the key
+    // for numbers to work.
+    public onKeypress = ($e: KeyboardEvent) => {
+        if (!this.board || !this.board.selectedCell) return;
+
+        let char = '';
+        if ($e.key) {
+            char = $e.key;
+        } else {
+            char = String.fromCharCode($e.keyCode || $e.which);
+        }
+
+        const num = parseInt(char, 10);
+        if (num >= 1 && num <= 9) {
+            const { row, col } = this.board.selectedCell;
+            this.store.dispatch(PuzzleActions.toggleNum({
+                row,
+                col,
+                num,
+            }))
         }
     }
 
