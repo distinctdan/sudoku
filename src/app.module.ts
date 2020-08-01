@@ -12,7 +12,7 @@ import { PuzzleControlsComponent} from 'src/components/puzzleControls/puzzleCont
 import { PuzzleListPageComponent } from 'src/pages/puzzleListPage/puzzleListPage.component';
 import { PuzzlePageComponent } from 'src/pages/puzzlePage/puzzlePage.component';
 import { puzzlesFeatureKey, puzzlesReducer, PuzzleEffects } from 'src/store/puzzle';
-import { SaveStateService } from 'src/services/saveState.service';
+import { saveStateMetaReducer } from 'src/store/saveState.metareducer';
 
 @NgModule({
     declarations: [
@@ -28,9 +28,11 @@ import { SaveStateService } from 'src/services/saveState.service';
         // import HttpClientModule after BrowserModule.
         HttpClientModule,
         AppRoutingModule,
-        StoreModule.forRoot({
-            [puzzlesFeatureKey]: puzzlesReducer
-        }, {initialState: undefined}),
+        StoreModule.forRoot(
+            {[puzzlesFeatureKey]: puzzlesReducer},
+            // Loads/saves to localStorage
+            {metaReducers: [saveStateMetaReducer]}
+        ),
         EffectsModule.forRoot([PuzzleEffects])
     ],
     providers: [],
