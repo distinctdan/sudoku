@@ -128,6 +128,7 @@ export function puzzlesReducer(
                     [state.activePuzzleId]: {
                         ...puzzle,
                         selectedCell: undefined,
+                        showingAllNum: undefined,
                     }
                 }
             }
@@ -149,7 +150,8 @@ export function puzzlesReducer(
                         selectedCell: {
                             row,
                             col,
-                        }
+                        },
+                        showingAllNum: undefined,
                     },
                 }
             }
@@ -159,7 +161,22 @@ export function puzzlesReducer(
                 ...state,
                 activePuzzleId: action.puzzleId,
             }
-        case PuzzleActions.toggleGuessMode.type:
+        case PuzzleActions.setGuessColor.type: {
+            const activePuzzle = state.puzzles[state.activePuzzleId];
+            if (!activePuzzle) return state;
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: {
+                        ...activePuzzle,
+                        guessColor: action.color,
+                    },
+                }
+            };
+        }
+        case PuzzleActions.toggleGuessMode.type: {
             const activePuzzle = state.puzzles[state.activePuzzleId];
             if (!activePuzzle || activePuzzle.hasWon || !canToggleGuessMode(activePuzzle)) return state;
 
@@ -194,6 +211,7 @@ export function puzzlesReducer(
                     [state.activePuzzleId]: puzzle,
                 }
             };
+        }
         case PuzzleActions.toggleNum.type: {
             // Make sure we have a puzzle loaded and an editable cell selected
             const puzzleOrig = state.puzzles[state.activePuzzleId]
@@ -234,10 +252,7 @@ export function puzzlesReducer(
                 if (!cell.num) {
                     cell.num = num;
                 } else {
-                    if (cell.num === num) {
-                        // Cell already has this num: clear it.
-                        cell.num = undefined;
-                    } else {
+                    if (cell.num !== num) {
                         // Cell already has a different num. Convert both into guesses
                         cell.isGuessMode = true;
                         cell.guesses = {
@@ -245,7 +260,28 @@ export function puzzlesReducer(
                             [num]: {color: puzzle.guessColor},
                         }
                     }
+                    // Cell already had a num, we've converted it to a guess
+                    cell.num = undefined;
                 }
+            }
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: puzzle,
+                }
+            }
+        }
+        case PuzzleActions.toggleShowAllOfNum.type: {
+            const puzzleOrig = state.puzzles[state.activePuzzleId]
+            if (!puzzleOrig || puzzleOrig.hasWon || puzzleOrig.selectedCell) return state;
+
+            const puzzle = { ...puzzleOrig };
+            if (puzzle.showingAllNum === action.num) {
+                puzzle.showingAllNum = undefined;
+            } else {
+                puzzle.showingAllNum = action.num;
             }
 
             return {

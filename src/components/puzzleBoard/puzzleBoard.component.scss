@@ -1,10 +1,13 @@
+@import 'src/styles/colors';
+
 $cellSize: 40px;
 $borderOuterColor: #000;
 $borderInnerColor: #BBB;
 $border: 1px solid $borderInnerColor;
 $borderRadius: 4px;
 
-.puzzleBoard_wrapper {
+:host {
+    display: block;
     text-align: center;
 }
 
@@ -69,6 +72,7 @@ $borderRadius: 4px;
     border-left: $border;
     border-top: $border;
     color: #2979b1;
+    user-select: none;
 
     // Vertical borders for cell groups
     &:nth-child(1), &:nth-child(4), &:nth-child(7) {
@@ -90,8 +94,18 @@ $borderRadius: 4px;
         justify-content: stretch;
     }
 
-    &.rowColSelected { background: #dfe8f1; }
-    &.selected { background: #94bfe4; }
+    $rowColSelectedColor: #dfe8f1;
+    $selectedColor: #accdea; //#a0c6e7; //#94bfe4;
+
+    &.rowColSelected { background: $rowColSelectedColor; }
+    &.selected { background: $selectedColor; }
+
+    &:hover {
+        background: lighten($rowColSelectedColor, 5%);
+
+        &.rowColSelected { background: lighten($rowColSelectedColor, 3%); };
+        &.selected { background: lighten($selectedColor, 3%); };
+    }
 }
 
 .puzzleBoard_cellNum {
@@ -116,4 +130,6 @@ $borderRadius: 4px;
     text-align: center;
 }
 
-.puzzleColor_blue { color: #2979b1 }
+.puzzleColor_blue { color: $guessColor_blue; }
+.puzzleColor_green { color: $guessColor_green; }
+.puzzleColor_red { color: $guessColor_red; }

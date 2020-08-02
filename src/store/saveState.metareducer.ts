@@ -47,7 +47,7 @@ export function saveStateMetaReducer(reducer: ActionReducer<AppState, Action>) {
 
         if (firstRun) {
             firstRun = false;
-            
+
             // If we have saved state, merge it into the initial state.
             const savedState = loadState();
             if (savedState) {

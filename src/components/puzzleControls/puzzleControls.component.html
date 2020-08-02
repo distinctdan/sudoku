@@ -1,3 +1,80 @@
-<div class="puzzleControls">
-    Controls
+<div class="puzzleControls_buttonGroup">
+    <div class="puzzleControls_buttonsRow">
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(1)"
+            [pressed]="isNumPressed(1)">1</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(2)"
+            [pressed]="isNumPressed(2)">2</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(3)"
+            [pressed]="isNumPressed(3)">3</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(4)"
+            [pressed]="isNumPressed(4)">4</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(5)"
+            [pressed]="isNumPressed(5)">5</puzzle-controls-button>
+    </div>
+    <div class="puzzleControls_buttonsRow">
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(6)"
+            [pressed]="isNumPressed(6)">6</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(7)"
+            [pressed]="isNumPressed(7)">7</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(8)"
+            [pressed]="isNumPressed(8)">8</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onNumPress(9)"
+            [pressed]="isNumPressed(9)">9</puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onClearCell()">X</puzzle-controls-button>
+    </div>
+</div>
+<div class="puzzleControls_buttonGroup">
+    <div class="puzzleControls_buttonsRow">
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onToggleGuessMode()"
+            [pressed]="isGuessMode()"
+            [disabled]="!canToggleGuessMode()"
+        >
+            <i class="fa fa-pencil-square-o puzzleControls_guessButton"></i>
+        </puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onSetGuessColor(PuzzleColor.Blue)"
+            [pressed]="isGuessColor(PuzzleColor.Blue)"
+        >
+            <div class="puzzleControls_guessSquare blue"></div>
+        </puzzle-controls-button>
+    </div>
+    <div class="puzzleControls_buttonsRow">
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onSetGuessColor(PuzzleColor.Green)"
+            [pressed]="isGuessColor(PuzzleColor.Green)"
+        >
+            <div class="puzzleControls_guessSquare green"></div>
+        </puzzle-controls-button>
+        <puzzle-controls-button
+            class="puzzleControls_button"
+            (onPress)="onSetGuessColor(PuzzleColor.Red)"
+            [pressed]="isGuessColor(PuzzleColor.Red)"
+        >
+            <div class="puzzleControls_guessSquare red"></div>
+        </puzzle-controls-button>
+    </div>
 </div>

@@ -9,6 +9,10 @@ body {
     background: #eff3f5;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .page_container {
     width: 100%;
     max-width: 600px;

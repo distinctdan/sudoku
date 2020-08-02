@@ -13,6 +13,7 @@ import { PuzzleListPageComponent } from 'src/pages/puzzleListPage/puzzleListPage
 import { PuzzlePageComponent } from 'src/pages/puzzlePage/puzzlePage.component';
 import { puzzlesFeatureKey, puzzlesReducer, PuzzleEffects } from 'src/store/puzzle';
 import { saveStateMetaReducer } from 'src/store/saveState.metareducer';
+import { PuzzleControlsButtonComponent } from 'src/components/puzzleControlsButton/puzzleControlsButton.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { saveStateMetaReducer } from 'src/store/saveState.metareducer';
         PuzzleBoardComponent,
         PuzzleCellColorDirective,
         PuzzleControlsComponent,
+        PuzzleControlsButtonComponent,
         PuzzleListPageComponent,
         PuzzlePageComponent,
     ],

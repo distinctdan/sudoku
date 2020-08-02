@@ -13,9 +13,7 @@ import { KeyCode } from 'src/enums';
 export class PuzzleBoardComponent {
     @Input() board: IPuzzle;
 
-    constructor(private store: Store) {
-
-    }
+    constructor(private store: Store) {}
 
     public isCellSelected(cell: IPuzzleCell): boolean {
         const selectedCell = this.board && this.board.selectedCell;
@@ -33,7 +31,7 @@ export class PuzzleBoardComponent {
     }
 
     public onBlur = () => {
-        this.store.dispatch(PuzzleActions.deselectCells());
+        // this.store.dispatch(PuzzleActions.deselectCells());
     }
 
     public onCellClick = ($e: MouseEvent, cell: IPuzzleCell) => {

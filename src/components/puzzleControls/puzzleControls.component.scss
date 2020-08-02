@@ -1,0 +1,77 @@
+@import 'src/styles/colors';
+
+$buttonHeight: 50px;
+$buttonWidth: 50px;
+$buttonRadius: 4px;
+
+:host {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.puzzleControls_buttonGroup {
+    flex: 0 0 auto;
+    margin-right: 10px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.puzzleControls_numsContainer {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.puzzleControls_draftContainer {
+    display: inline-block;
+}
+
+.puzzleControls_buttonsRow {
+    display: flex;
+
+    // Rounded corners for button groups
+    &:first-child {
+        .puzzleControls_button {
+            &:first-child { border-top-left-radius: $buttonRadius; }
+            &:last-child { border-top-right-radius: $buttonRadius; }
+        }
+    }
+    &:last-child {
+        .puzzleControls_button {
+            &:first-child { border-bottom-left-radius: $buttonRadius; }
+            &:last-child { border-bottom-right-radius: $buttonRadius; }
+        }
+    }
+}
+
+// Give the buttons size and a border
+.puzzleControls_button {
+    flex: 0 0 auto;
+    width: $buttonWidth;
+    height: $buttonHeight;
+    font-size: 20px;
+
+    border: 1px solid #555;
+    border-radius: 0;
+    cursor: pointer;
+
+    // The interior properties like background are controlled bye the puzzleControlsButton component.
+}
+
+.puzzleControls_guessButton {
+    // The font-awesome icon isn't centered, need to offset it.
+    position: relative;
+    left: 3px;
+}
+
+.puzzleControls_guessSquare {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+
+    &.blue { background: $guessColor_blue; }
+    &.green { background: $guessColor_green; }
+    &.red { background: $guessColor_red; }
+}

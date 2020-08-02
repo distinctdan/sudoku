@@ -1,0 +1,29 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: inset -1px -1px 0px 1px #cacacaa6;
+    cursor: pointer;
+    user-select: none;
+    background: #f1f1f1;
+
+    // Our borders are set by the puzzleControls component.
+
+    &.pressed {
+        box-shadow: inset 1px 1px 0px 1px rgba(98, 152, 192, 0.5);
+        background: #acceea;
+
+        &:hover:not(.disabled) {
+            background: lighten(#acceea, 4%);
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover:not(.disabled) {
+        background: #f9f9f9;
+    }
+}

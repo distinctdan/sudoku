@@ -22,6 +22,7 @@
     "@angular/router": "~10.0.5",
     "@ngrx/effects": "^9.2.0",
     "@ngrx/store": "^9.2.0",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.19",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

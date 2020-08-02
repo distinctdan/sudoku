@@ -1,64 +1,62 @@
-<div class="puzzleBoard_wrapper">
-    <div class="puzzleBoard"
-         tabindex="0"
-         (keydown)="onKeyDown($event)"
-         (keypress)="onKeypress($event)"
-         (blur)="onBlur()"
+<div class="puzzleBoard"
+     tabindex="0"
+     (keydown)="onKeyDown($event)"
+     (keypress)="onKeypress($event)"
+     (blur)="onBlur()"
+>
+    <div *ngFor="let row of board.rows"
+         class="puzzleBoard_row"
     >
-        <div *ngFor="let row of board.rows"
-             class="puzzleBoard_row"
+        <div *ngFor="let cell of row; "
+             class="puzzleBoard_cell"
+             [ngClass]="{
+                error: cell.isError,
+                guessMode: cell.isGuessMode,
+                rowColSelected: isCellRowColSelected(cell),
+                selected: isCellSelected(cell),
+                starterVal: cell.isStarterVal
+             }"
+             (mousedown)="onCellClick($event, cell)"
+             role="button"
         >
-            <div *ngFor="let cell of row; "
-                 class="puzzleBoard_cell"
-                 [ngClass]="{
-                    error: cell.isError,
-                    guessMode: cell.isGuessMode,
-                    rowColSelected: isCellRowColSelected(cell),
-                    selected: isCellSelected(cell),
-                    starterVal: cell.isStarterVal
-                 }"
-                 (mousedown)="onCellClick($event, cell)"
-                 role="button"
-            >
-                <div *ngIf="!cell.isGuessMode"
-                     class="puzzleBoard_cellNum">
-                    {{cell.num}}
+            <div *ngIf="!cell.isGuessMode"
+                 class="puzzleBoard_cellNum">
+                {{cell.num}}
+            </div>
+            <!-- This could be made into nested ngFor's, but I think it's simple enough as is. -->
+            <div *ngIf="cell.isGuessMode"
+                 class="puzzleBoard_cellGuesses">
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[1]" [puzzleCellColor]="cell.guesses[1]?.color">1</span>
+                    </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[2]" [puzzleCellColor]="cell.guesses[2]?.color">2</span>
+                    </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[3]" [puzzleCellColor]="cell.guesses[3]?.color">3</span>
+                    </div>
                 </div>
-                <!-- This could be made into nested ngFor's, but I think it's simple enough as is. -->
-                <div *ngIf="cell.isGuessMode"
-                     class="puzzleBoard_cellGuesses">
-                    <div class="puzzleBoard_cellGuessRow">
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[1]" [puzzleCellColor]="cell.guesses[1]?.color">1</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[2]" [puzzleCellColor]="cell.guesses[2]?.color">2</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[3]" [puzzleCellColor]="cell.guesses[3]?.color">3</span>
-                        </div>
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[4]" [puzzleCellColor]="cell.guesses[4]?.color">4</span>
                     </div>
-                    <div class="puzzleBoard_cellGuessRow">
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[4]" [puzzleCellColor]="cell.guesses[4]?.color">4</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[5]" [puzzleCellColor]="cell.guesses[5]?.color">5</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[6]" [puzzleCellColor]="cell.guesses[6]?.color">6</span>
-                        </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[5]" [puzzleCellColor]="cell.guesses[5]?.color">5</span>
                     </div>
-                    <div class="puzzleBoard_cellGuessRow">
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[7]" [puzzleCellColor]="cell.guesses[7]?.color">7</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[8]" [puzzleCellColor]="cell.guesses[8]?.color">8</span>
-                        </div>
-                        <div class="puzzleBoard_cellGuess">
-                            <span *ngIf="cell.guesses[9]" [puzzleCellColor]="cell.guesses[9]?.color">9</span>
-                        </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[6]" [puzzleCellColor]="cell.guesses[6]?.color">6</span>
+                    </div>
+                </div>
+                <div class="puzzleBoard_cellGuessRow">
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[7]" [puzzleCellColor]="cell.guesses[7]?.color">7</span>
+                    </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[8]" [puzzleCellColor]="cell.guesses[8]?.color">8</span>
+                    </div>
+                    <div class="puzzleBoard_cellGuess">
+                        <span *ngIf="cell.guesses[9]" [puzzleCellColor]="cell.guesses[9]?.color">9</span>
                     </div>
                 </div>
             </div>
