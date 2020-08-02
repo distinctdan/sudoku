@@ -130,7 +130,7 @@ export function puzzlesReducer(
         case PuzzleActions.deselectCells.type: {
             // Make sure we have a puzzle loaded and a cell selected
             const puzzle = state.puzzles[state.activePuzzleId]
-            if (!puzzle || puzzle.hasWon || !puzzle.selectedCell) return state;
+            if (!puzzle || puzzle.hasWon) return state;
 
             return {
                 ...state,
@@ -142,7 +142,7 @@ export function puzzlesReducer(
                         showingAllNum: undefined,
                     }
                 }
-            }
+            };
         }
         case PuzzleActions.selectCell.type: {
             const puzzle = state.puzzles[state.activePuzzleId]

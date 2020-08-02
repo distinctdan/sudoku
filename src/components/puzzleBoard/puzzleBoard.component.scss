@@ -6,6 +6,10 @@ $borderInnerColor: #BBB;
 $border: 1px solid $borderInnerColor;
 $borderRadius: 4px;
 
+$rowColSelectedColor: #dfe8f1;
+$selectedColor: #accdea;
+$errorColor: #f58f8f;
+
 :host {
     border-radius: 4px;
 
@@ -15,6 +19,17 @@ $borderRadius: 4px;
 }
 
 .puzzleBoard {
+    // Highlighting guesses is way faster with CSS than with ng-class.
+    $guessHighlightedColor: $rowColSelectedColor;
+    &.showAll1 .guess1.hasGuess { background: $guessHighlightedColor; }
+    &.showAll2 .guess2.hasGuess { background: $guessHighlightedColor; }
+    &.showAll3 .guess3.hasGuess { background: $guessHighlightedColor; }
+    &.showAll4 .guess4.hasGuess { background: $guessHighlightedColor; }
+    &.showAll5 .guess5.hasGuess { background: $guessHighlightedColor; }
+    &.showAll6 .guess6.hasGuess { background: $guessHighlightedColor; }
+    &.showAll7 .guess7.hasGuess { background: $guessHighlightedColor; }
+    &.showAll8 .guess8.hasGuess { background: $guessHighlightedColor; }
+    &.showAll9 .guess9.hasGuess { background: $guessHighlightedColor; }
 }
 
 .puzzleBoard_row {
@@ -90,11 +105,8 @@ $borderRadius: 4px;
         justify-content: stretch;
     }
 
-    $rowColSelectedColor: #dfe8f1;
-    $selectedColor: #accdea;
-    $errorColor: #f58f8f;
-
     &.rowColSelected { background: $rowColSelectedColor; }
+    &.showAllOfNum { background: $rowColSelectedColor; }
     &.selected { background: $selectedColor; }
     &.error { background: $errorColor; }
 
@@ -102,6 +114,7 @@ $borderRadius: 4px;
         background: lighten($rowColSelectedColor, 5%);
 
         &.rowColSelected { background: lighten($rowColSelectedColor, 3%); }
+        &.showAllOfNum { background: lighten($rowColSelectedColor, 3%); }
         &.selected { background: lighten($selectedColor, 3%); }
         &.error { background: lighten($errorColor, 2%); }
     }
@@ -130,5 +143,5 @@ $borderRadius: 4px;
 }
 
 .puzzleColor_blue { color: $guessColor_blue; }
-.puzzleColor_green { color: $guessColor_green; }
+.puzzleColor_yellow { color: $guessColor_yellow; }
 .puzzleColor_red { color: $guessColor_red; }

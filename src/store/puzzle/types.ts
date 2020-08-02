@@ -2,6 +2,10 @@ import { PuzzleColor } from 'src/enums/PuzzleColor';
 
 export const puzzlesFeatureKey = 'puzzlesFeature';
 
+export interface IPuzzleGuess {
+    color: PuzzleColor;
+}
+
 export interface IPuzzleCell {
     num: number | undefined;
     isError?: boolean;
@@ -10,15 +14,15 @@ export interface IPuzzleCell {
     isStarterVal: boolean;
     guesses: {
         // Using explicit numbers here to get correct typing.
-        1?: { color: PuzzleColor };
-        2?: { color: PuzzleColor };
-        3?: { color: PuzzleColor };
-        4?: { color: PuzzleColor };
-        5?: { color: PuzzleColor };
-        6?: { color: PuzzleColor };
-        7?: { color: PuzzleColor };
-        8?: { color: PuzzleColor };
-        9?: { color: PuzzleColor };
+        1?: IPuzzleGuess;
+        2?: IPuzzleGuess;
+        3?: IPuzzleGuess;
+        4?: IPuzzleGuess;
+        5?: IPuzzleGuess;
+        6?: IPuzzleGuess;
+        7?: IPuzzleGuess;
+        8?: IPuzzleGuess;
+        9?: IPuzzleGuess;
     };
     // Caching row and column because they never change and it saves us having to look them up.
     row: number;

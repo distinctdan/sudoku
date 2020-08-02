@@ -1,13 +1,39 @@
-import {ActionReducer, Action} from '@ngrx/store';
-import {merge, cloneDeep} from 'lodash';
+import { Action, ActionReducer } from '@ngrx/store';
+import { merge } from 'lodash';
 import { AppState } from 'src/store/index';
+import { IPuzzleGuess, puzzlesFeatureKey } from 'src/store/puzzle';
+import { PuzzleColor } from 'src/enums';
 
 interface AppStateSaved extends AppState {
     __version: number,
 }
 
 const lsKey = 'sudokuAppState';
-const version = 1;
+const version = 3;
+
+// If we change the saved data format, run the saved data through
+// an upgrade check to migrate the data.
+function migrateState(state: AppStateSaved): AppStateSaved {
+    switch (state.__version) {
+        case 2:
+            // Changed Green to Yellow
+            for (const [_, puzzle] of Object.entries(state[puzzlesFeatureKey].puzzles)) {
+                for (const row of puzzle.rows) {
+                    for (const cell of row) {
+                        for (const [_, guess] of Object.entries(cell.guesses)) {
+                            if (guess.color as any === 'Green') {
+                                guess.color = PuzzleColor.Yellow;
+                            }
+                        }
+                    }
+                }
+            }
+        // Fallthrough
+        case 3:
+            break;
+    }
+    return state;
+}
 
 function saveState(state: AppState): void {
     if (!state) return;
@@ -25,18 +51,14 @@ function loadState(): AppState {
     const dataStr = localStorage[lsKey];
     if (!dataStr) return undefined;
 
-    const data: AppStateSaved = JSON.parse(dataStr);
+    const state: AppStateSaved = JSON.parse(dataStr);
 
-    // If we change the saved data format, run the saved data through
-    // an upgrade check to see if it's an old version of the app.
-    // switch (data.__version) {
-    //     case 1:
-    //         // Upgrade to version 2
-    // }
+    if (state.__version !== version) {
+        migrateState(state);
+    }
 
-    delete data.__version;
-
-    return <AppState>data;
+    delete state.__version;
+    return <AppState>state;
 }
 
 export function saveStateMetaReducer(reducer: ActionReducer<AppState, Action>) {

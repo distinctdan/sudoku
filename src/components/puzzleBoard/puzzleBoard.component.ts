@@ -1,9 +1,9 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { IPuzzle, IPuzzleCell } from 'src/store/puzzle';
+import { IPuzzle, IPuzzleCell, IPuzzleGuess } from 'src/store/puzzle';
 import { PuzzleActions } from 'src/store/puzzle';
-import { KeyCode } from 'src/enums';
+import { KeyCode, PuzzleColor } from 'src/enums';
 
 @Component({
     selector: 'puzzle-board',
@@ -13,13 +13,8 @@ import { KeyCode } from 'src/enums';
 export class PuzzleBoardComponent {
     @Input() board: IPuzzle;
 
-    constructor(private store: Store) {}
+    constructor(private store: Store) {
 
-    public isCellSelected(cell: IPuzzleCell): boolean {
-        const selectedCell = this.board && this.board.selectedCell;
-        return selectedCell
-            && cell.row === selectedCell.row
-            && cell.col === selectedCell.col;
     }
 
     public isCellRowColSelected(cell: IPuzzleCell): boolean {
@@ -28,6 +23,18 @@ export class PuzzleBoardComponent {
             cell.row === selectedCell.row
             || cell.col === selectedCell.col
         )
+    }
+
+    public isCellSelected(cell: IPuzzleCell): boolean {
+        const selectedCell = this.board && this.board.selectedCell;
+        return selectedCell
+            && cell.row === selectedCell.row
+            && cell.col === selectedCell.col;
+    }
+
+    public isShowingAllOfNum(cell: IPuzzleCell): boolean {
+        const showingAllNum = this.board?.showingAllNum;
+        return showingAllNum && cell.num && cell.num === showingAllNum;
     }
 
     public onCellClick = ($e: MouseEvent, cell: IPuzzleCell) => {

@@ -69,19 +69,15 @@ export class PuzzlePageComponent implements OnInit, OnDestroy {
         if (!this.boardRef || !this.boardRef.nativeElement
             || !this.controlsRef || !this.controlsRef.nativeElement
         ) {
-            console.log('no els. board, controls: ', this.boardRef, this.controlsRef);
             return;
         }
 
         if (this.controlsRef.nativeElement.contains($e.target)) {
-            console.log('controls click, boardRef: ', this.boardRef.nativeElement);
             // If the user clicked the controls, focus the board so that keyboard events still work.
             this.boardRef.nativeElement.focus({preventScroll: true});
         } else if (this.boardRef.nativeElement.contains($e.target)) {
-            console.log('board clicked')
             // Board was clicked, do nothing.
         } else {
-            console.log('outside click')
             // User clicked outside the board and controls: deselect.
             this.store.dispatch(PuzzleActions.deselectCells());
         }

@@ -7,7 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppComponent } from 'src/components/app/app.component';
 import { AppRoutingModule } from 'src/app-routing.module';
 import { PuzzleBoardComponent } from 'src/components/puzzleBoard/puzzleBoard.component';
-import { PuzzleCellColorDirective} from 'src/directives/puzzleCellColor.directive';
+import { PuzzleCellClassesDirective} from 'src/directives/puzzle-cell-classes.directive';
 import { PuzzleControlsComponent} from 'src/components/puzzleControls/puzzleControls.component';
 import { PuzzleListPageComponent } from 'src/pages/puzzleListPage/puzzleListPage.component';
 import { PuzzlePageComponent } from 'src/pages/puzzlePage/puzzlePage.component';
@@ -19,7 +19,7 @@ import { PuzzleControlsButtonComponent } from 'src/components/puzzleControlsButt
     declarations: [
         AppComponent,
         PuzzleBoardComponent,
-        PuzzleCellColorDirective,
+        PuzzleCellClassesDirective,
         PuzzleControlsComponent,
         PuzzleControlsButtonComponent,
         PuzzleListPageComponent,
