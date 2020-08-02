@@ -7,18 +7,14 @@ $border: 1px solid $borderInnerColor;
 $borderRadius: 4px;
 
 :host {
-    display: block;
-    text-align: center;
-}
-
-.puzzleBoard {
-    display: inline-block;
     border-radius: 4px;
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 2px 1px #55a2e6;
     }
+}
+
+.puzzleBoard {
 }
 
 .puzzleBoard_row {

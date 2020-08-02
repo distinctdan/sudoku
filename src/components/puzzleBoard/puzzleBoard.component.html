@@ -1,9 +1,4 @@
-<div class="puzzleBoard"
-     tabindex="0"
-     (keydown)="onKeyDown($event)"
-     (keypress)="onKeypress($event)"
-     (blur)="onBlur()"
->
+<div class="puzzleBoard">
     <div *ngFor="let row of board.rows"
          class="puzzleBoard_row"
     >

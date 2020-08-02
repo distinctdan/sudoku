@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { IPuzzle, IPuzzleCell } from 'src/store/puzzle';
@@ -30,10 +30,6 @@ export class PuzzleBoardComponent {
         )
     }
 
-    public onBlur = () => {
-        // this.store.dispatch(PuzzleActions.deselectCells());
-    }
-
     public onCellClick = ($e: MouseEvent, cell: IPuzzleCell) => {
         this.store.dispatch(PuzzleActions.selectCell({
             row: cell.row,
@@ -41,6 +37,7 @@ export class PuzzleBoardComponent {
         }));
     }
 
+    @HostListener('keydown', ['$event'])
     public onKeyDown = ($e: KeyboardEvent) => {
         if ($e.defaultPrevented) return;
 
@@ -89,6 +86,7 @@ export class PuzzleBoardComponent {
 
     // This is separate from onKeyDown because we need the text value of the key
     // for numbers to work.
+    @HostListener('keypress', ['$event'])
     public onKeypress = ($e: KeyboardEvent) => {
         if (!this.board || !this.board.selectedCell) return;
 

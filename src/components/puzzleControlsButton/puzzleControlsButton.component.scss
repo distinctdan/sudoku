@@ -6,13 +6,17 @@
     box-shadow: inset -1px -1px 0px 1px #cacacaa6;
     cursor: pointer;
     user-select: none;
-    background: #f1f1f1;
 
     // Our borders are set by the puzzleControls component.
 
+    $defaultColor: #f1f1f1;
+    $pressedColor: #acceea;
+
+    background: $defaultColor;
+
     &.pressed {
         box-shadow: inset 1px 1px 0px 1px rgba(98, 152, 192, 0.5);
-        background: #acceea;
+        background: $pressedColor;
 
         &:hover:not(.disabled) {
             background: lighten(#acceea, 4%);
@@ -25,5 +29,11 @@
 
     &:hover:not(.disabled) {
         background: #f9f9f9;
+    }
+
+    &:active:not(.disabled),
+    &.pressed:active:not(.disabled) {
+        box-shadow: inset 1px 1px 0px 1px rgba(98, 152, 192, 0.6);
+        background: darken($pressedColor, 5%);
     }
 }

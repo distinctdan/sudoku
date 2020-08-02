@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from "rxjs";
@@ -17,6 +17,9 @@ import * as PuzzleSelectors from 'src/store/puzzle/selectors/puzzle.selectors';
     styleUrls: ['./puzzlePage.component.scss']
 })
 export class PuzzlePageComponent implements OnInit, OnDestroy {
+    @ViewChild('boardRef', {read: ElementRef}) boardRef: ElementRef;
+    @ViewChild('controlsRef', {read: ElementRef}) controlsRef: ElementRef;
+
     // So we can use enums in the template
     public LoadState = LoadState;
 
@@ -57,5 +60,30 @@ export class PuzzlePageComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.activePuzzleSub.unsubscribe();
+    }
+
+    // Manages focus. We want to keep the board focused for keyboard events to work.
+    @HostListener('window:click', ['$event'])
+    public onWindowClick = ($e: MouseEvent) => {
+        // Make sure we're rendered.
+        if (!this.boardRef || !this.boardRef.nativeElement
+            || !this.controlsRef || !this.controlsRef.nativeElement
+        ) {
+            console.log('no els. board, controls: ', this.boardRef, this.controlsRef);
+            return;
+        }
+
+        if (this.controlsRef.nativeElement.contains($e.target)) {
+            console.log('controls click, boardRef: ', this.boardRef.nativeElement);
+            // If the user clicked the controls, focus the board so that keyboard events still work.
+            this.boardRef.nativeElement.focus({preventScroll: true});
+        } else if (this.boardRef.nativeElement.contains($e.target)) {
+            console.log('board clicked')
+            // Board was clicked, do nothing.
+        } else {
+            console.log('outside click')
+            // User clicked outside the board and controls: deselect.
+            this.store.dispatch(PuzzleActions.deselectCells());
+        }
     }
 }

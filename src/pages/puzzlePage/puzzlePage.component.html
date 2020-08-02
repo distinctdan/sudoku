@@ -13,10 +13,22 @@
     </div>
     <div *ngIf="loadingState === LoadState.Success">
         <div class="puzzlePage_boardContainer">
-            <puzzle-board [board]="puzzle"></puzzle-board>
+            <puzzle-board
+                [board]="puzzle"
+                #boardRef
+                class="puzzlePage_board"
+                tabindex="0"
+            ></puzzle-board>
         </div>
-        <div class="puzzlePage_controls">
-            <puzzle-controls [board]="puzzle"></puzzle-controls>
+        <!-- Using 2 containers for horizontal centering,
+         because puzzle-controls are display flex instead of inline-block. -->
+        <div class="puzzlePage_controlsContainerOuter">
+            <div class="puzzlePage_controlsContainerInner">
+                <puzzle-controls
+                    [board]="puzzle"
+                    #controlsRef
+                ></puzzle-controls>
+            </div>
         </div>
     </div>
 </div>
