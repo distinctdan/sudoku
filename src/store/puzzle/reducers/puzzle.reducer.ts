@@ -5,20 +5,6 @@ import { IPuzzlesState, IPuzzle, IPuzzleCell } from 'src/store/puzzle/types';
 import { PuzzleColor } from 'src/enums';
 import { canToggleGuessMode } from 'src/store/puzzle/selectors/puzzle.selectors';
 
-// Helper function, returns true if the cell has an error
-function markPuzzleErrors_checkCell(existingNums: boolean[], cell: IPuzzleCell): boolean {
-    if (cell.num) {
-        if (existingNums[cell.num]) {
-            cell.isError = true;
-            return true;
-        } else {
-            existingNums[cell.num] = true;
-        }
-    }
-
-    return false;
-}
-
 // Returns number of errors found
 function markPuzzleErrors(puzzle: IPuzzle): number {
     let errorCount = 0;
@@ -31,38 +17,61 @@ function markPuzzleErrors(puzzle: IPuzzle): number {
     }
 
     // It's an error if the same number is in row, columns, or group.
-    // Check rows
+    // We're doing a 2 pass algorithm:
+    // - Store how many of each number is in the row/col/group
+    // - Go through again and see if the count for the current number is greater than 1
     for (const row of puzzle.rows) {
-        // Keep track of duplicates per row.
-        const existingNums = new Array(9);
+        const existingNums = new Array(10).fill(0);
 
         for (const cell of row) {
-            const hasError = markPuzzleErrors_checkCell(existingNums, cell);
-            if (hasError) errorCount++;
+            if (cell.num) existingNums[cell.num]++;
+        }
+
+        for (const cell of row) {
+            if (cell.num && existingNums[cell.num] > 1) {
+                errorCount++;
+                cell.isError = true;
+            }
         }
     }
 
     // Check columns.
     for (let colI = 0; colI < 9; colI++) {
-        const existingNums = new Array(9);
+        const existingNums = new Array(10).fill(0);
 
         for (let rowI = 0; rowI < 9; rowI++) {
             const cell = puzzle.rows[rowI][colI];
-            const hasError = markPuzzleErrors_checkCell(existingNums, cell);
-            if (hasError) errorCount++;
+            if (cell.num) existingNums[cell.num]++;
+        }
+
+        for (let rowI = 0; rowI < 9; rowI++) {
+            const cell = puzzle.rows[rowI][colI];
+            if (cell.num && existingNums[cell.num] > 1) {
+                cell.isError = true;
+                errorCount++;
+            }
         }
     }
 
     // Check groups of 9
     for (let groupRowI = 0; groupRowI < 9; groupRowI += 3) {
         for (let groupColI = 0; groupColI < 9; groupColI += 3) {
-            const existingNums = new Array(9);
+            const existingNums = new Array(10).fill(0);
 
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
                     const cell = puzzle.rows[groupRowI + i][groupColI + j];
-                    const hasError = markPuzzleErrors_checkCell(existingNums, cell);
-                    if (hasError) errorCount++;
+                    if (cell.num) existingNums[cell.num]++;
+                }
+            }
+
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const cell = puzzle.rows[groupRowI + i][groupColI + j];
+                    if (cell.num && existingNums[cell.num] > 1) {
+                        cell.isError = true;
+                        errorCount++;
+                    }
                 }
             }
         }
@@ -107,6 +116,8 @@ export function puzzlesReducer(
             cell.guesses = {};
             cell.isGuessMode = false;
             cell.num = undefined;
+
+            markPuzzleErrors(newPuzzleState);
 
             return {
                 ...state,
@@ -203,6 +214,7 @@ export function puzzlesReducer(
                 }
                 cell.guesses = {};
             }
+            markPuzzleErrors(puzzle);
 
             return {
                 ...state,
@@ -264,6 +276,8 @@ export function puzzlesReducer(
                     cell.num = undefined;
                 }
             }
+
+            markPuzzleErrors(puzzle);
 
             return {
                 ...state,
