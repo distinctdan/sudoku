@@ -17,9 +17,9 @@
                 </a>
                 <div class="puzzle_details">
                     <div class="puzzle_detailsDifficulty">
-                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Easy">Medium</span>
-                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Medium">Hard</span>
-                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Hard">Impossible</span>
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Easy">Easy</span>
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Medium">Medium</span>
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Hard">Hard</span>
                     </div>
                     <div class="puzzle_detailsCompleted">
                         <span *ngIf="isPuzzleCompleted(listItem.id)">

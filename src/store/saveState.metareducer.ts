@@ -9,29 +9,18 @@ interface AppStateSaved extends AppState {
 }
 
 const lsKey = 'sudokuAppState';
-const version = 3;
+const version = 1;
 
 // If we change the saved data format, run the saved data through
 // an upgrade check to migrate the data.
 function migrateState(state: AppStateSaved): AppStateSaved {
-    switch (state.__version) {
-        case 2:
-            // Changed Green to Yellow
-            for (const [_, puzzle] of Object.entries(state[puzzlesFeatureKey].puzzles)) {
-                for (const row of puzzle.rows) {
-                    for (const cell of row) {
-                        for (const [_, guess] of Object.entries(cell.guesses)) {
-                            if (guess.color as any === 'Green') {
-                                guess.color = PuzzleColor.Yellow;
-                            }
-                        }
-                    }
-                }
-            }
-        // Fallthrough
-        case 3:
-            break;
-    }
+    // switch (state.__version) {
+    //     case 1:
+    //         // Upgrade from version 1 to 2.
+    //     // Fallthrough
+    //     case 2:
+    //         break;
+    // }
     return state;
 }
 
