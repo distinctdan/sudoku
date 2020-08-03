@@ -1,4 +1,5 @@
 :host {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,9 +12,27 @@
 
     $defaultColor: #f1f1f1;
     $pressedColor: #acceea;
+    $errorColor: #ffc9c9;
+    $completedColor: #cdf9c8;
 
     background: $defaultColor;
 
+    &.error {
+        box-shadow: inset 1px 1px 0px 1px $errorColor;
+        background: $errorColor;
+
+        &:hover:not(.disabled) {
+            background: lighten($errorColor, 4%);
+        }
+    }
+    &.completed {
+        box-shadow: inset 1px 1px 0px 1px $completedColor;
+        background: $completedColor;
+
+        &:hover:not(.disabled) {
+            background: lighten($completedColor, 4%);
+        }
+    }
     &.pressed {
         box-shadow: inset 1px 1px 0px 1px rgba(98, 152, 192, 0.5);
         background: $pressedColor;
@@ -36,4 +55,12 @@
         box-shadow: inset 1px 1px 0px 1px rgba(98, 152, 192, 0.6);
         background: darken($pressedColor, 5%);
     }
+}
+
+.numberCount {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    opacity: 0.5;
+    font-size: 10px;
 }

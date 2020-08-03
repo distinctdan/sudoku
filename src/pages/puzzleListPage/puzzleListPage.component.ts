@@ -42,8 +42,13 @@ export class PuzzleListPageComponent implements OnInit, OnDestroy {
         if (this.puzzlesSub) this.puzzlesSub.unsubscribe();
     }
 
-    public isPuzzleCompleted(puzzleId: string) {
+    public isPuzzleCompleted(puzzleId: string): boolean {
         return this.puzzlesState?.puzzles[puzzleId]?.hasWon;
+    }
+
+    public isPuzzleInProgress(puzzleId: string): boolean {
+        const puzzle = this.puzzlesState?.puzzles[puzzleId];
+        return puzzle && !puzzle.hasWon;
     }
 
     public trackByPuzzles(index, puzzle: IPuzzleListItem) {

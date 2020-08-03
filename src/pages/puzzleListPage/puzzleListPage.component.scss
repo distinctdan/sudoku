@@ -10,7 +10,7 @@
 .puzzles_listItem {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .puzzle_link {
@@ -57,7 +57,11 @@
 .puzzle_details {
     flex: 0 0 auto;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 15px;
     text-align: left;
     font-size: 14px;
+}
+
+.puzzle_detailsDifficulty {
+    font-weight: bold;
 }

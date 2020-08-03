@@ -134,6 +134,7 @@ $errorColor: #f58f8f;
     &.showAllOfNum { background: $rowColSelectedColor; }
     &.selected { background: $selectedColor; }
     &.error { background: $errorColor; }
+    &.selected.error { background: darken($errorColor, 10%); }
 
     &:hover {
         background: lighten($rowColSelectedColor, 5%);
@@ -142,6 +143,7 @@ $errorColor: #f58f8f;
         &.showAllOfNum { background: lighten($rowColSelectedColor, 3%); }
         &.selected { background: lighten($selectedColor, 3%); }
         &.error { background: lighten($errorColor, 2%); }
+        &.selected.error { background: darken($errorColor, 5%); }
     }
 }
 

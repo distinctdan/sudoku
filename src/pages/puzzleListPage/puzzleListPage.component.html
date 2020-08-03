@@ -25,6 +25,9 @@
                         <span *ngIf="isPuzzleCompleted(listItem.id)">
                             Completed!
                         </span>
+                        <span *ngIf="isPuzzleInProgress(listItem.id)">
+                            In progress...
+                        </span>
                         &nbsp;
                     </div>
                 </div>
