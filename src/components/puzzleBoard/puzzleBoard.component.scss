@@ -21,7 +21,8 @@ $errorColor: #f58f8f;
 
 @keyframes winAnim {
     0%   { background: #FFF; }
-    50%  { background: #fff75d; }
+    40%  { background: #fff75d; }
+    60%  { background: #fff75d; }
     100% { background: #FFF; }
 }
 
@@ -50,6 +51,12 @@ $errorColor: #f58f8f;
             @for $col from 1 to 10 {
                 .puzzleBoard_row:nth-child(#{$row}) .puzzleBoard_cell:nth-child(#{$col}) {
                     $delay: ($row + $col) * $stagger;
+
+                    // Offset even rows/cols for a checkboard effect
+                    @if ($row + $col) % 2 != 0 {
+                        $delay: $delay + ($stagger * 4.5);
+                    }
+
                     animation: 500ms ease $delay infinite winAnim;
                 }
             }
