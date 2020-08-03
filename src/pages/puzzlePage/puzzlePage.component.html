@@ -14,7 +14,7 @@
     <div *ngIf="loadingState === LoadState.Success">
         <div class="puzzlePage_boardContainer">
             <puzzle-board
-                [board]="puzzle"
+                [board]="puzzle$ | async"
                 #boardRef
                 class="puzzlePage_board"
                 tabindex="0"
@@ -25,9 +25,13 @@
         <div class="puzzlePage_controlsContainerOuter">
             <div class="puzzlePage_controlsContainerInner">
                 <puzzle-controls
-                    [board]="puzzle"
+                    *ngIf="!(puzzle$ | async)?.hasWon"
+                    [board]="puzzle$ | async"
                     #controlsRef
                 ></puzzle-controls>
+                <div *ngIf="(puzzle$ | async)?.hasWon" class="puzzlePage_winMessage">
+                    Puzzle complete!
+                </div>
             </div>
         </div>
     </div>

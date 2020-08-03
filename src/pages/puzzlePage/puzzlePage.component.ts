@@ -1,20 +1,26 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 import { LoadState } from 'src/enums/LoadState';
 import { AppState } from 'src/store';
 import { PuzzleService } from 'src/services/puzzle.service';
 import { IPuzzle } from 'src/store/puzzle/types';
-import * as PuzzleActions from 'src/store/puzzle/actions/puzzle.actions';
-import * as PuzzleAPIActions from 'src/store/puzzle/actions/puzzleAPI.actions';
-import * as PuzzleSelectors from 'src/store/puzzle/selectors/puzzle.selectors';
+import { PuzzleActions, PuzzleAPIActions, selectActivePuzzle } from 'src/store/puzzle';
 
 @Component({
     selector: 'puzzle-page',
     templateUrl: './puzzlePage.component.html',
-    styleUrls: ['./puzzlePage.component.scss']
+    styleUrls: ['./puzzlePage.component.scss'],
 })
 export class PuzzlePageComponent implements OnInit, OnDestroy {
     @ViewChild('boardRef', {read: ElementRef}) boardRef: ElementRef;
@@ -25,10 +31,11 @@ export class PuzzlePageComponent implements OnInit, OnDestroy {
 
     private activePuzzleSub: Subscription;
     public loadingState = LoadState.Initial;
-    public puzzle: IPuzzle;
+    public puzzle$: Observable<IPuzzle> = this.store.select(selectActivePuzzle);
     public title = '';
 
     constructor(
+        private changeDetectorRef: ChangeDetectorRef,
         private puzzleService: PuzzleService,
         private route: ActivatedRoute,
         private store: Store<AppState>,
@@ -43,23 +50,23 @@ export class PuzzlePageComponent implements OnInit, OnDestroy {
         this.store.dispatch(PuzzleActions.setActivePuzzle({ puzzleId }));
 
         // Load the puzzle if it's not already in the store
-        this.activePuzzleSub = this.store.select(PuzzleSelectors.selectActivePuzzle)
-            .subscribe((activePuzzle) => {
-                this.puzzle = activePuzzle;
-
-                if (!activePuzzle) {
-                    if (this.loadingState === LoadState.Initial) {
-                        this.loadingState = LoadState.Loading
-                        this.store.dispatch(PuzzleAPIActions.loadPuzzle({ puzzleId }));
-                    }
-                } else {
-                    this.loadingState = LoadState.Success;
+        this.puzzle$ = this.store.select(selectActivePuzzle);
+        this.activePuzzleSub = this.puzzle$.subscribe((activePuzzle) => {
+            if (!activePuzzle) {
+                if (this.loadingState === LoadState.Initial) {
+                    this.loadingState = LoadState.Loading
+                    this.store.dispatch(PuzzleAPIActions.loadPuzzle({ puzzleId }));
                 }
-            });
+            } else {
+                this.loadingState = LoadState.Success;
+            }
+            // Our loadingState prop is local state, so need to mark it as changed.
+            this.changeDetectorRef.markForCheck();
+        });
     }
 
     ngOnDestroy() {
-        this.activePuzzleSub.unsubscribe();
+        if (this.activePuzzleSub) this.activePuzzleSub.unsubscribe();
     }
 
     // Manages focus. We want to keep the board focused for keyboard events to work.

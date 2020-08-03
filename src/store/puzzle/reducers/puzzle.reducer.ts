@@ -6,7 +6,26 @@ import { PuzzleColor } from 'src/enums';
 import { canToggleGuessMode } from 'src/store/puzzle/selectors/puzzle.selectors';
 
 // Returns number of errors found
-function markPuzzleErrors(puzzle: IPuzzle): number {
+function checkWin(numErrors: number, puzzle: IPuzzle): void {
+    if (numErrors === 0) {
+        // No errors, see if all cells are filled in.
+        let count = 0;
+        for (const row of puzzle.rows) {
+            for (const cell of row) {
+                if (cell.num) count++;
+            }
+        }
+
+        if (count === 81) {
+            // WIN!!!
+            puzzle.hasWon = true;
+            puzzle.selectedCell = undefined;
+            puzzle.showingAllNum = undefined;
+        }
+    }
+}
+
+function markErrors(puzzle: IPuzzle): number {
     let errorCount = 0;
 
     // First clear all errors
@@ -117,7 +136,7 @@ export function puzzlesReducer(
             cell.isGuessMode = false;
             cell.num = undefined;
 
-            markPuzzleErrors(newPuzzleState);
+            markErrors(newPuzzleState);
 
             return {
                 ...state,
@@ -214,7 +233,9 @@ export function puzzlesReducer(
                 }
                 cell.guesses = {};
             }
-            markPuzzleErrors(puzzle);
+
+            const numErrors = markErrors(puzzle);
+            checkWin(numErrors, puzzle);
 
             return {
                 ...state,
@@ -277,7 +298,8 @@ export function puzzlesReducer(
                 }
             }
 
-            markPuzzleErrors(puzzle);
+            const numErrors = markErrors(puzzle);
+            checkWin(numErrors, puzzle);
 
             return {
                 ...state,

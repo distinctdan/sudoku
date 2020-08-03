@@ -8,19 +8,56 @@
 }
 
 .puzzles_listItem {
-    display: block;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.puzzle_link {
+    flex: 0 0 auto;
+    display: inline-block;
     width: 200px;
     padding: 8px 12px;
-    margin-bottom: 5px;
     border: 1px solid #333;
     border-radius: 4px;
     cursor: pointer;
-    background: #137eca;
-    color: #EEE;
     text-decoration: none;
 
-    &:hover, &:focus {
-        background: #3396dc;
-        color: #FFF;
+    $colorEasy: #02af47;
+    $colorMedium: #f3eb07;
+    $colorHard: #f54235;
+
+    &.easy {
+        background: $colorEasy;
+        color: #F3F3F3;
+
+        &:hover, &:focus, &:active {
+            background: lighten($colorEasy, 5%);
+            color: #FFF;
+        }
     }
+    &.medium {
+        background: $colorMedium;
+        color: #111;
+
+        &:hover, &:focus, &:active {
+            background: lighten($colorMedium, 15%);
+        }
+    }
+    &.hard {
+        background: $colorHard;
+        color: #111;
+
+        &:hover, &:focus, &:active {
+            background: lighten($colorHard, 7%);
+        }
+    }
+}
+
+.puzzle_details {
+    flex: 0 0 auto;
+    display: inline-block;
+    margin-left: 20px;
+    text-align: left;
+    font-size: 14px;
 }

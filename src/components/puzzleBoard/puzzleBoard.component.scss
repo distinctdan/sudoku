@@ -6,6 +6,7 @@ $borderInnerColor: #BBB;
 $border: 1px solid $borderInnerColor;
 $borderRadius: 4px;
 
+$defaultColor: #FFF;
 $rowColSelectedColor: #dfe8f1;
 $selectedColor: #accdea;
 $errorColor: #f58f8f;
@@ -16,6 +17,12 @@ $errorColor: #f58f8f;
     &:focus {
         outline: none;
     }
+}
+
+@keyframes winAnim {
+    0%   { background: #FFF; }
+    50%  { background: #fff75d; }
+    100% { background: #FFF; }
 }
 
 .puzzleBoard {
@@ -30,6 +37,24 @@ $errorColor: #f58f8f;
     &.showAll7 .guess7.hasGuess { background: $guessHighlightedColor; }
     &.showAll8 .guess8.hasGuess { background: $guessHighlightedColor; }
     &.showAll9 .guess9.hasGuess { background: $guessHighlightedColor; }
+
+    &.win {
+        //.puzzleBoard_cell {
+        //    background: #fff424;
+        //}
+
+
+        $stagger: 50ms;
+
+        @for $row from 1 to 10 {
+            @for $col from 1 to 10 {
+                .puzzleBoard_row:nth-child(#{$row}) .puzzleBoard_cell:nth-child(#{$col}) {
+                    $delay: ($row + $col) * $stagger;
+                    animation: 500ms ease $delay infinite winAnim;
+                }
+            }
+        }
+    }
 }
 
 .puzzleBoard_row {
@@ -78,7 +103,7 @@ $errorColor: #f58f8f;
     flex-direction: column;
 
     font-size: 30px;
-    background: #FFF;
+    background: $defaultColor;
     cursor: pointer;
     border-left: $border;
     border-top: $border;

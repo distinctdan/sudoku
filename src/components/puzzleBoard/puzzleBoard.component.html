@@ -9,7 +9,8 @@
          showAll6: board.showingAllNum === 6,
          showAll7: board.showingAllNum === 7,
          showAll8: board.showingAllNum === 8,
-         showAll9: board.showingAllNum === 9
+         showAll9: board.showingAllNum === 9,
+         win: board.hasWon
      }"
 >
     <div *ngFor="let row of board.rows"

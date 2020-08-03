@@ -7,7 +7,6 @@ import * as PuzzleAPIActions from "src/store/puzzle/actions/puzzleAPI.actions";
 
 @Injectable()
 export class PuzzleEffects {
-
     loadPuzzle$ = createEffect(() => this.actions$.pipe(
         ofType(PuzzleAPIActions.loadPuzzle),
         mergeMap((action) => {
@@ -15,9 +14,10 @@ export class PuzzleEffects {
                 map(puzzle => {
                     return PuzzleAPIActions.loadPuzzleSuccess({puzzle: puzzle})
                 }),
-                catchError((err) => of(
-                    PuzzleAPIActions.loadPuzzleError({puzzleId: action.puzzleId, err: err})
-                ))
+                catchError((err) => {
+                    console.log('puzzle load err: ', err, action.puzzleId);
+                    return of(PuzzleAPIActions.loadPuzzleError({puzzleId: action.puzzleId, err: err}));
+                })
             );
         })
     ));

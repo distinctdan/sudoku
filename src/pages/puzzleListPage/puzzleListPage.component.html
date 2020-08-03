@@ -4,12 +4,31 @@
     </h1>
     <div class="puzzles_listWrapper">
         <div class="puzzles_list">
-            <a *ngFor="let puzzle of puzzles; trackBy: trackByPuzzles"
-               class="puzzles_listItem"
-               [routerLink]="['/puzzles', puzzle.id]"
-            >
-                {{puzzle.name}}
-            </a>
+            <div *ngFor="let listItem of puzzlesList; trackBy: trackByPuzzles" class="puzzles_listItem">
+                <a class="puzzle_link"
+                   [ngClass]="{
+                       easy: listItem.difficulty === PuzzleDifficulty.Easy,
+                       medium: listItem.difficulty === PuzzleDifficulty.Medium,
+                       hard: listItem.difficulty === PuzzleDifficulty.Hard
+                   }"
+                   [routerLink]="['/puzzles', listItem.id]"
+                >
+                    {{listItem.name}}
+                </a>
+                <div class="puzzle_details">
+                    <div class="puzzle_detailsDifficulty">
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Easy">Medium</span>
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Medium">Hard</span>
+                        <span *ngIf="listItem.difficulty === PuzzleDifficulty.Hard">Impossible</span>
+                    </div>
+                    <div class="puzzle_detailsCompleted">
+                        <span *ngIf="isPuzzleCompleted(listItem.id)">
+                            Completed!
+                        </span>
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
