@@ -103,4 +103,10 @@ export class PuzzleControlsComponent implements OnChanges{
         const { row, col } = this.board.selectedCell;
         this.store.dispatch(PuzzleActions.toggleGuessMode({ row, col }))
     }
+
+    public confirmResetPuzzle() {
+        if (confirm('Are you sure you want to restart this puzzle?')) {
+            this.store.dispatch(PuzzleActions.resetPuzzle());
+        }
+    }
 }

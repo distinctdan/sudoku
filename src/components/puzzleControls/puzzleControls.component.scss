@@ -5,9 +5,18 @@ $buttonWidth: 50px;
 $buttonRadius: 4px;
 
 :host {
+    display: block;
     margin-top: 10px;
+}
+
+.controlsMain {
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
+}
+
+.controlsExtra {
+    text-align: left;
 }
 
 .puzzleControls_buttonGroup {

@@ -7,7 +7,10 @@ export const clearCell = createAction(
 );
 export const deselectCells = createAction(
     '[Puzzle] Deselect Cells'
-)
+);
+export const resetPuzzle = createAction(
+    '[Puzzle] Reset Puzzle'
+);
 export const selectCell = createAction(
     '[Puzzle] Select Cell',
     props<{row: number, col: number}>()
@@ -37,6 +40,7 @@ export const toggleShowAllOfNum = createAction(
 const actions = union({
     clearCell,
     deselectCells,
+    resetPuzzle,
     selectCell,
     setActivePuzzle,
     setGuessColor,

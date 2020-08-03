@@ -163,6 +163,34 @@ export function puzzlesReducer(
                 }
             };
         }
+        case PuzzleActions.resetPuzzle.type: {
+            const activePuzzle = state.puzzles[state.activePuzzleId]
+            if (!activePuzzle) return state;
+
+            const puzzle: IPuzzle = cloneDeep(activePuzzle);
+            // Clear all cells
+            for (const row of puzzle.rows) {
+                for (const cell of row) {
+                    if (!cell.isStarterVal) {
+                        cell.num = undefined;
+                        cell.isError = false;
+                        cell.guesses = {};
+                        cell.isGuessMode = false;
+                    }
+                }
+            }
+            puzzle.hasWon = false;
+            puzzle.showingAllNum = undefined;
+            puzzle.selectedCell = undefined;
+
+            return {
+                ...state,
+                puzzles: {
+                    ...state.puzzles,
+                    [state.activePuzzleId]: puzzle,
+                }
+            }
+        }
         case PuzzleActions.selectCell.type: {
             const puzzle = state.puzzles[state.activePuzzleId]
             if (!puzzle || puzzle.hasWon) return state;

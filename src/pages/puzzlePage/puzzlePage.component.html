@@ -24,14 +24,13 @@
          because puzzle-controls are display flex instead of inline-block. -->
         <div class="puzzlePage_controlsContainerOuter">
             <div class="puzzlePage_controlsContainerInner">
-                <puzzle-controls
-                    *ngIf="!(puzzle$ | async)?.hasWon"
-                    [board]="puzzle$ | async"
-                    #controlsRef
-                ></puzzle-controls>
                 <div *ngIf="(puzzle$ | async)?.hasWon" class="puzzlePage_winMessage">
                     Puzzle complete!
                 </div>
+                <puzzle-controls
+                    [board]="puzzle$ | async"
+                    #controlsRef
+                ></puzzle-controls>
             </div>
         </div>
     </div>
