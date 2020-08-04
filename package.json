@@ -1,7 +1,7 @@
 {
   "name": "sudoku",
-  "version": "0.0.0",
-  "sideEffects": false,
+  "version": "1.0.0",
+  "sideEffects": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -23,8 +23,8 @@
     "@ngrx/effects": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.19",
-    "rxjs": "~6.5.5",
+    "lodash-es": "^4.17.15",
+    "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
