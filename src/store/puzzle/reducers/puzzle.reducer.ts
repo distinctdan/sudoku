@@ -171,9 +171,10 @@ export function puzzlesReducer(
             // Clear all cells
             for (const row of puzzle.rows) {
                 for (const cell of row) {
+                    cell.isError = false;
+
                     if (!cell.isStarterVal) {
                         cell.num = undefined;
-                        cell.isError = false;
                         cell.guesses = {};
                         cell.isGuessMode = false;
                     }
