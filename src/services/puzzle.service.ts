@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -31,9 +30,7 @@ export class PuzzleService {
         {name: 'Puzzle 9', id: '9', difficulty: PuzzleDifficulty.Hard},
     ]
 
-    constructor(
-        private http: HttpClient,
-    ) {}
+    constructor() {}
 
     public getPuzzlesList(): IPuzzleListItem[] {
         // Mocking API
@@ -48,9 +45,7 @@ export class PuzzleService {
         return `Puzzle ?`
     }
 
-    // Simulating API
-    // Puzzles taken from http://www.cs.utep.edu/cheon/ws/sudoku/new/?size=9&level=3
-    // They're not available cross-origin, so we're mocking them.
+    // Simulating API - couldn't find a publicly available sudoku api.
     public getPuzzle(puzzleId: string): Observable<IPuzzle> {
         return new Observable<IPuzzleResponse>((subscriber => {
                 setTimeout(() => {
