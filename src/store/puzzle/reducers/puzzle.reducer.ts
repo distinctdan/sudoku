@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash';
 
 import { PuzzleActions, PuzzleAPIActions, } from 'src/store/puzzle/actions';
 import { IPuzzlesState, IPuzzle, IPuzzleCell } from 'src/store/puzzle/types';

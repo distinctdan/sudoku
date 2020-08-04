@@ -15,6 +15,8 @@ import { puzzlesFeatureKey, puzzlesReducer, PuzzleEffects } from 'src/store/puzz
 import { saveStateMetaReducer } from 'src/store/saveState.metareducer';
 import { PuzzleControlsButtonComponent } from 'src/components/puzzleControlsButton/puzzleControlsButton.component';
 
+console.log('App.module here');
+
 @NgModule({
     declarations: [
         AppComponent,

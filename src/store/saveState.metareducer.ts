@@ -1,5 +1,5 @@
 import { Action, ActionReducer } from '@ngrx/store';
-import { merge } from 'lodash';
+import merge from 'lodash';
 import { AppState } from 'src/store/index';
 import { IPuzzleGuess, puzzlesFeatureKey } from 'src/store/puzzle';
 import { PuzzleColor } from 'src/enums';
