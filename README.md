@@ -1,5 +1,7 @@
 # Sudoku
 
+Project built to learn Angular + NgRx. Play now at [distinctdan.github.io/sudoku/](https://distinctdan.github.io/sudoku).
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
 
 ## Development server
